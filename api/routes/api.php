@@ -15,11 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 // For authenticated users
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:sanctum,admin'])->get('/user', function (Request $request) {
+    $user =  $request->user();
+    if ($user->role === "admin") {
+        return ["user" => $user];
+    }else{
+        return ["user" => $user];
+    };
 });
 
-// For authenticated admins
-Route::middleware(['auth:sanctum:admin'])->get('/admin', function (Request $request) {
-    return $request->user();
-});
+// // For authenticated admins
+// Route::middleware(['auth:sanctum'])->get('/admin', function (Request $request) {
+//     return $request->user();
+// });

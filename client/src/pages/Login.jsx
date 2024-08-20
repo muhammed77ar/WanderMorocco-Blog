@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import axiosClient from "../axios/axios";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/slices/authSlice";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch()
   const emailRef = useRef()
   const passwordRef = useRef()
   const handelSubmit = async (e) => {
@@ -16,10 +19,16 @@ export default function Login() {
     }
 
     try {
-      const response = await axiosClient.post("/login", payload)
-      const data = response?.data
-      console.log(data)
+      const response = await axiosClient.post("/login", payload);
+      if (response && response.status === 200) {
+        const data = response.data;
+        const token = data?.token;
+        const role = data?.user?.role;
 
+        if (token && role) {
+          dispatch(login({ role, token }));
+        }
+      }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         // Backend validation errors

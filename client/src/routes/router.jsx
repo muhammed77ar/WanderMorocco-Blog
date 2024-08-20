@@ -12,21 +12,29 @@ import AdminProfile from "../pages/AdminProfile";
 import PostArticle from "../pages/PostArticle";
 import Articles from "../pages/Articles";
 import Notfound from "../pages/Notfound";
+import AuthLayout from "../Layouts/AuthLayout";
+import ProtectedRoute from "../ProtectedRoute";
 
 
 const router = createBrowserRouter([
     {
-        element: <GuestLayout />,
+        element: (
+            <ProtectedRoute allowedRoles={[]} isAuthRoute>
+              <GuestLayout />
+            </ProtectedRoute>
+          ),
         children: [
             { path: "/", element: <Home /> },
             { path: "/about", element: <About /> },
-            { path: "/login", element: <Login /> },
-            {path:"/signup", element: <Signup />},
             {path:"/articles", element: <Articles />}
         ],
     },
     {
-        element: <UserLayout />,
+        element: (
+            <ProtectedRoute  allowedRoles={['user']} isAuthRoute={false}>
+                <UserLayout />
+            </ProtectedRoute>
+        ),
         children: [
             { path: "user/", element: <Home /> },
             { path: "user/profile", element: <UserProfile /> },
@@ -36,11 +44,26 @@ const router = createBrowserRouter([
         ],
     },
     {
-        element: <AdminLayout />,
+        element: (
+            <ProtectedRoute allowedRoles={['admin']} isAuthRoute={false}>
+                <AdminLayout />
+            </ProtectedRoute>
+        ),
         children: [
             { path: "admin/dashboard", element: <AdminDashboard /> },
             { path : "admin/profile", element : <AdminProfile />},
         ],
+    },
+    {
+        element: (
+            <ProtectedRoute allowedRoles={[]} isAuthRoute>
+                <AuthLayout />
+            </ProtectedRoute>
+        ),
+        children : [
+            { path: "/login", element: <Login /> },
+            {path:"/signup", element: <Signup />},
+        ]
     },
     {
         path: "*",

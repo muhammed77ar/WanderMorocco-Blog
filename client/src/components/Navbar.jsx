@@ -49,7 +49,7 @@ export default function Navbar() {
         <ul className="list-none hidden sm:flex flex-row gap-5 items-center">
           {navLinks.map((link, key) => (
             <li key={key}
-              className={`relative ${Active === link.page ? 'after:w-full font-semibold px-2 text-white' : 'after:w-0 text-secondary text-white hover:text-gray-300 transition-all'} after:h-[5px] after:rounded-full after:bg-white after:absolute after:-z-10 after:-bottom-2.5 after:left-0 after:transition-all`}>
+              className={`relative ${Active === link.page ? 'after:w-full font-semibold px-2 text-white' : 'after:w-0 text-secondary text-white hover:text-gray-300 transition-all'} after:h-[3px] after:rounded-full after:bg-white after:absolute after:-z-10 after:-bottom-1 after:left-0 after:transition-all`}>
               <Link to={`${link.href}`} onClick={() => setActive(link.page)}>{link.page}</Link>
             </li>
           ))}
