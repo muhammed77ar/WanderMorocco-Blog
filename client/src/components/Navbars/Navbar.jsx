@@ -6,8 +6,6 @@ const navLinks = [
   { page: "Home", href: "/" },
   { page: "About", href: "/about" },
   { page: "Articles", href: "/articles" },
-  // { page: "Log In", href: "/login" },
-  // { page: "Sign Up", href: "/signup" },
 ];
 
 export default function Navbar() {

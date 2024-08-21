@@ -1,14 +1,54 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import axiosClient from "../axios/axios";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/slices/authSlice";
 
 
 export default function Signup() {
+  const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmationPassword, setConfirmationPassword] = useState(false);
+  const nameRef = useRef()
+  const emailRef = useRef()
+  const passwordRef = useRef()
+  const confirmPasswordRef = useRef()
+  const handelSubmit = async (e) => {
+    e.preventDefault()
+    const payload = {
+      name : nameRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      password_confirmation : confirmPasswordRef.current.value
+    }
+
+    try {
+      const response = await axiosClient.post("/register", payload);
+      if (response && response.status === 201) {
+        console.log(response)
+        const data = response.data;
+        const token = data?.token;
+        const role = data?.user?.role;
+
+        if (token && role) {
+          dispatch(login({ role, token }));
+        }
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        // Backend validation errors
+        console.log(error.response.data.errors);
+      } else {
+        // Other errors
+        console.log(error);
+      }
+    }
+
+  }
   return (
-    <div className="py-6 bg-[url('../images/2150763780.jpg')]">
+    <div className="py-6 bg-[url('../images/2150763780.jpg')] bg-no-repeat bg-cover">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl mt-[50px]">
         <div className="hidden lg:block lg:w-1/2 bg-[url('../images/2150763780.jpg')] bg-cover bg-no-repeat"></div>
         <div className="w-full p-8 lg:w-1/2">
@@ -30,20 +70,20 @@ export default function Signup() {
             <a href="#" className="text-xs text-center text-gray-500 uppercase">or sign up with email</a>
             <span className="border-b w-1/5 lg:w-1/4"></span>
           </div>
-          <form action="">
+          <form action="" onSubmit={handelSubmit}>
             <div className="mt-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">Username</label>
-              <input className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="text" />
+              <input ref={nameRef} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="text" />
             </div>
             <div className="mt-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
-              <input className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="email" />
+              <input ref={emailRef} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="email" />
             </div>
             <div className="mt-4 relative">
               <div className="flex justify-between">
                 <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
               </div>
-              <input className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type={showPassword ? "text" : "password"} />
+              <input ref={passwordRef} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type={showPassword ? "text" : "password"} />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -56,7 +96,7 @@ export default function Signup() {
               <div className="flex justify-between">
                 <label className="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
               </div>
-              <input className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type={showConfirmationPassword ? "text" : "password"} />
+              <input ref={confirmPasswordRef} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type={showConfirmationPassword ? "text" : "password"} />
               <button
                 type="button"
                 onClick={() => setConfirmationPassword(!showConfirmationPassword)}
@@ -66,7 +106,7 @@ export default function Signup() {
               </button>
             </div>
             <div className="mt-8">
-              <button className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Sign up</button>
+              <button type="submit" className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Sign up</button>
             </div>
           </form>
           <div className="mt-4 flex items-center justify-between">

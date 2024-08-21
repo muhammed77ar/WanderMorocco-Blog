@@ -41,7 +41,7 @@ export default function Login() {
 
   }
   return (
-    <div className="py-6 bg-[url('../images/2150763780.jpg')]">
+    <div className="py-6 bg-[url('../images/2150763780.jpg')] bg-no-repeat bg-cover">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl my-[70px]">
         <div className="hidden lg:block lg:w-1/2 bg-[url('../images/2150763780.jpg')] bg-cover bg-no-repeat"></div>
         <div className="w-full p-8 lg:w-1/2">

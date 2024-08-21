@@ -1,15 +1,34 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axiosClient from "../axios/axios";
+import { setUserInfo } from "../redux/slices/authSlice";
+import { useEffect } from "react";
+import UserNavbar from "../components/Navbars/UserNavbar";
 
 
 export default function UserLayout() {
-  const user = useSelector((state) => state.auth.user);
-  console.log(user)
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated); 
+  const dispatch = useDispatch()
+ 
+
+  const GetUserData = async () => {
+    try {
+      const response = await axiosClient.get("api/user");
+      dispatch(setUserInfo(response?.data?.user));
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+  useEffect(() => {
+    if (isAuthenticated) {
+      GetUserData();
+    }
+  }, [isAuthenticated]);
+
   return (
     <div>
-        <Navbar />
+        <UserNavbar />
         <main>
             <Outlet />
         </main>
