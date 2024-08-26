@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthGoogle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,9 @@ Route::middleware(['auth:sanctum,admin'])->get('/user', function (Request $reque
         return ["user" => $user];
     };
 });
+
+Route::get('auth/google', [AuthGoogle::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [AuthGoogle::class, 'handleGoogleCallback']);
 
 // // For authenticated admins
 // Route::middleware(['auth:sanctum'])->get('/admin', function (Request $request) {

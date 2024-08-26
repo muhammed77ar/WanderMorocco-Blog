@@ -93,28 +93,26 @@ export default function Navbar() {
               </button>
             </nav>
           </div>
-          <div className={`transition-transform duration-500 ease-in-out transform ${open ? 'translate-x-0' : '-translate-x-full'} fixed top-0 left-0 w-[50%] h-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-90 border-2 border-gray-100 z-20`}>
+          <div className={`transition-transform duration-500 ease-in-out transform ${open ? 'translate-x-0' : '-translate-x-full'} fixed top-0 left-0 w-[50%] h-full bg-white z-20 shadow-[8px_0px_11px_-1px_rgba(0,_0,_0,_0.1)]`}>
             <ul className="list-none w-full mt-28 flex justify-start items-center flex-col gap-5">
               {navLinks.map((link, key) => (
                 <>
                   <li key={key}
-                    className={`relative ${Active === link.page ? 'after:w-full font-semibold px-7 text-black' : 'after:w-0 text-white hover:text-gray-300 font-semibold transition-all'} after:h-[45px] after:rounded-full after:bg-white after:absolute after:-z-20 after:-bottom-2.5 after:left-0 after:transition-all`}>
+                    className={`relative ${Active === link.page ? 'after:w-full font-semibold px-7 text-white' : 'after:w-0 text-balck hover:text-gray-300 font-semibold transition-all'} after:h-[45px] after:rounded-full after:bg-black after:absolute after:-z-20 after:-bottom-2.5 after:left-0 after:transition-all`}>
                     <Link to={`${link.href}`} onClick={() => {
                       setActive(link.page)
                       toggleMenu()
                     }}>{link.page}</Link>
                   </li>
-                  <div className=" w-full h-[2px] bg-white transform"></div>
                 </>
               ))}
               <li>
-            <Link to={"/login"} className=" text-white bg-[#d67940] px-6 py-2 rounded-full font-medium flex justify-center items-center hover:bg-[#c06b36] transition-all">
+            <Link to={"/login"} onClick={() => toggleMenu()} className=" text-white bg-[#d67940] px-6 py-2 rounded-full font-medium flex justify-center items-center hover:bg-[#c06b36] transition-all">
               Sign in
             </Link>
           </li>
-          <div className=" w-full h-[2px] bg-white transform"></div>
           <li>
-            <Link to={"/signup"} className=" text-white bg-[#d67940] px-5 py-2 rounded-full font-medium flex justify-center items-center hover:bg-[#c06b36] transition-all">
+            <Link to={"/signup"} onClick={() => toggleMenu()} className=" text-white bg-[#d67940] px-5 py-2 rounded-full font-medium flex justify-center items-center hover:bg-[#c06b36] transition-all">
               Create Account
               <span className="mt-[2px]">
                 <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" className="w-5 h-5 fill-current"><path fill="currentColor" d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"></path>

@@ -5,7 +5,7 @@ export default function Hero() {
     return (
         <>
             <section
-                className="relative bg-[url(../images/heroBackground.jpg)] bg-cover bg-center bg-no-repeat"
+                className="relative bg-[url(../images/13892.jpg)] bg-cover bg-center bg-no-repeat"
             >
                 <div
                     className="absolute inset-0 bg-gradient-to-r from-slate-900 to-transparent"

@@ -113,10 +113,10 @@ export default function UserNavbar() {
                             </li>
                         </ul> */}
                         <div className="cursor-pointer">
-                            <a onClick={logout} className="px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-black flex justify-center items-center gap-2"><CgProfile className=" text-xl -ml-2" />Profile</a>
+                            <a className="px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-black flex justify-center items-center gap-2"><CgProfile className=" text-xl -ml-2" />Profile</a>
                         </div>
                         <div className="cursor-pointer">
-                            <a onClick={logout} className=" px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-black flex justify-center items-center gap-2"><IoMdSettings className=" text-lg" />Settings</a>
+                            <a className=" px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-black flex justify-center items-center gap-2"><IoMdSettings className=" text-lg" />Settings</a>
                         </div>
                         <div className="cursor-pointer">
                             <a onClick={logout} className="rounded-b-lg px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-black flex justify-center items-center gap-2"><RiLogoutBoxLine className=" text-lg" />Sign out</a>
@@ -152,18 +152,17 @@ export default function UserNavbar() {
                         </nav>
                     </div>
                     </div>
-                    <div className={`transition-transform duration-500 ease-in-out transform ${open ? 'translate-x-0' : '-translate-x-full'} fixed top-0 left-0 w-[50%] h-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-90 border-2 border-gray-100 z-20`}>
-                        <ul className="list-none w-full mt-28 flex justify-start items-center flex-col gap-5">
+                    <div className={`transition-transform duration-500 ease-in-out transform ${open ? 'translate-x-0' : '-translate-x-full'} fixed top-0 left-0 w-[50%] h-full bg-white z-20 shadow-[8px_0px_11px_-1px_rgba(0,_0,_0,_0.1)]`}>
+                        <ul className="list-none w-full mt-28 flex justify-start items-center flex-col gap-10">
                             {navLinks.map((link, key) => (
                                 <>
                                     <li key={key}
-                                        className={`relative ${Active === link.page ? 'after:w-full font-semibold px-7 text-black' : 'after:w-0 text-white hover:text-gray-300 font-semibold transition-all'} after:h-[45px] after:rounded-full after:bg-white after:absolute after:-z-20 after:-bottom-2.5 after:left-0 after:transition-all`}>
+                                        className={`relative ${Active === link.page ? 'after:w-full font-semibold px-7 text-white' : 'after:w-0 text-back hover:text-gray-300 font-semibold transition-all'} after:h-[45px] after:rounded-full after:bg-black after:absolute after:-z-20 after:-bottom-2.5 after:left-0 after:transition-all`}>
                                         <Link to={`${link.href}`} onClick={() => {
                                             setActive(link.page)
                                             toggleMenu()
                                         }}>{link.page}</Link>
                                     </li>
-                                    <div className=" w-full h-[2px] bg-white transform"></div>
                                 </>
                             ))}
                         </ul>

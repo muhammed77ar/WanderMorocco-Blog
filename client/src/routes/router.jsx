@@ -14,6 +14,7 @@ import Articles from "../pages/Articles";
 import Notfound from "../pages/Notfound";
 import AuthLayout from "../Layouts/AuthLayout";
 import ProtectedRoute from "../ProtectedRoute";
+import GoogleCallback from "../pages/GoogleCallback";
 
 
 const router = createBrowserRouter([
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
             { path: "user/profile", element: <UserProfile /> },
             {path:"user/articles", element : <Articles />},
             {path : "user/postArticle", element: <PostArticle />},
-            {path : "user/about" , element:<About />}
+            {path : "user/about" , element:<About />},
         ],
     },
     {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
         children : [
             { path: "/login", element: <Login /> },
             {path:"/signup", element: <Signup />},
+            {
+                path: "/auth/google",
+                element: <GoogleCallback />,
+            },
         ]
     },
     {
