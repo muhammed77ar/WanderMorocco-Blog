@@ -3,8 +3,12 @@ import { MdOutlineEmail } from "react-icons/md";
 import { FaHouseUser } from "react-icons/fa";
 import { FaSignsPost } from "react-icons/fa6";
 import UserPosts from "../components/UserPosts";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import Modal from "../components/Modal";
 
 export default function UserProfile() {
+  const [open, setOpen] = useState(false)
   const user = useSelector((state) => state.auth.user)
   return (
     <main className="profile-page">
@@ -56,9 +60,29 @@ export default function UserProfile() {
                     <button
                       className="bg-[#d67940] active:bg-[#d67940] uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                       type="button"
+                      onClick={() => setOpen(true)}
                     >
                       Edit Your Profile
                     </button>
+                    <Modal open={open} onClose={() => setOpen(false)}>
+                      <div className="text-center w-56">
+                        <div className="mx-auto my-4 w-48">
+                          <h3 className="text-lg font-black text-gray-800">Confirm Delete</h3>
+                          <p className="text-sm text-gray-500">
+                            Are you sure you want to delete this item?
+                          </p>
+                        </div>
+                        <div className="flex gap-4">
+                          <button className="btn btn-danger w-full">Delete</button>
+                          <button
+                            className="btn btn-light w-full"
+                            onClick={() => setOpen(false)}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </Modal>
                   </div>
                 </div>
                 <div className="w-full lg:w-4/12 px-4 lg:order-1">

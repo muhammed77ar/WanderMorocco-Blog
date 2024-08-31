@@ -2,10 +2,15 @@
 export default function FeaturedDestinationsCard() {
 	return (
 		<div>
-			<h1 className="text-4xl border-l-4 font-medium pl-2 border-[#d67940] mx-10 mt-10">
+			<h1 className="text-4xl font-medium mx-10 mt-10">
 				Featured Destinations
 			</h1>
 			<p className=" mx-10 text-gray-500">Explore the Must-See Wonders of Morocco</p>
+			<div className="mt-2 mx-10">
+				<span className="inline-block w-40 h-1 bg-[#d67940] rounded-full"></span>
+				<span className="inline-block w-3 h-1 ml-1 bg-[#d67940] rounded-full"></span>
+				<span className="inline-block w-1 h-1 ml-1 bg-[#d67940] rounded-full"></span>
+			</div>
 			<div className="my-10 mx-10 h-[700px] sm:h-[600px] grid grid-cols-1 grid-rows-4 gap-4 sm:grid-cols-5 sm:grid-rows-4">
 				<div className="relative col-span-1 row-span-1 sm:col-span-3 sm:row-span-2 bg-slate-600 rounded-xl bg-[url('../images/1Jemaa-el-Fna.jpg')] bg-no-repeat bg-cover bg-center shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] cursor-pointer transition-all duration-500 hover:-translate-y-2">
 					<div className="flex flex-col items-start justify-end gap-2 h-full w-full bg-gradient-to-t from-slate-900 to-transparent rounded-xl px-5 py-5">

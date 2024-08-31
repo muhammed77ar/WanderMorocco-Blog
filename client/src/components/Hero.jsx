@@ -21,7 +21,7 @@ export default function Hero() {
                             <strong className="block font-extrabold text-[#d67940]">Hidden Treasures and Timeless Beauty </strong>
                         </h1>
 
-                        <p className="mt-4 max-w-lg text-white font-medium sm:text-xl/relaxed">
+                        <p className="mt-4 w-full text-white font-medium sm:text-xl/relaxed">
                         Join us on a journey through vibrant souks, stunning landscapes, and hidden gems as we uncover the beauty and culture of Morocco.
                         </p>
 

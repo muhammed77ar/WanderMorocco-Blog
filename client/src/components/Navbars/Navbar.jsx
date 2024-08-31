@@ -41,8 +41,8 @@ export default function Navbar() {
             setActive("")
             window.scrollTo(0, 0)
           }}>
-          {/* <img src={""} alt="Logo" className="w-14 h-14 object-conatine" /> */}
-          <p className="text-white text-[18px] font-bold cursor-pointer">WanderMorocco</p>
+          <img src={"../images/logo-no-background.png"} alt="Logo" className=" w-[200px] object-conatine" />
+          
         </Link>
         <ul className="list-none hidden sm:flex flex-row gap-5 items-center">
           {navLinks.map((link, key) => (

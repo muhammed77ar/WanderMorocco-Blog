@@ -15,6 +15,7 @@ import Notfound from "../pages/Notfound";
 import AuthLayout from "../Layouts/AuthLayout";
 import ProtectedRoute from "../ProtectedRoute";
 import GoogleCallback from "../pages/GoogleCallback";
+import EditUserProfile from "../pages/EditUserProfile";
 
 
 const router = createBrowserRouter([
