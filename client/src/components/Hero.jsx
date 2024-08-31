@@ -1,11 +1,11 @@
 
-
+import {Link} from 'react-router-dom'
 
 export default function Hero() {
     return (
         <>
             <section
-                className="relative bg-[url(../images/13892.jpg)] bg-cover bg-center bg-no-repeat"
+                className="relative bg-[url(../images/13892.jpg)] bg-cover bg-center bg-no-repeat shadow-[0px_37px_27px_-11px_rgba(161,161,161,0.63)]"
             >
                 <div
                     className="absolute inset-0 bg-gradient-to-r from-slate-900 to-transparent"
@@ -26,12 +26,12 @@ export default function Hero() {
                         </p>
 
                         <div className="mt-8 flex justify-center flex-wrap gap-4 text-center">
-                            <a
-                                href="#"
+                            <Link
+                                to={"/signup"}
                                 className="block w-full rounded bg-[#d67940] px-12 py-3 text-sm font-medium text-white shadow transition ease-in hover:bg-[#b06334] focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
                             >
                                 Get Started
-                            </a>
+                            </Link>
 
                             <a
                                 href="#"

@@ -113,7 +113,7 @@ export default function UserNavbar() {
                             </li>
                         </ul> */}
                         <div className="cursor-pointer">
-                            <a className="px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-black flex justify-center items-center gap-2"><CgProfile className=" text-xl -ml-2" />Profile</a>
+                            <Link to={"user/profile"} className="px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-black flex justify-center items-center gap-2"><CgProfile className=" text-xl -ml-2" />Profile</Link>
                         </div>
                         <div className="cursor-pointer">
                             <a className=" px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-black flex justify-center items-center gap-2"><IoMdSettings className=" text-lg" />Settings</a>

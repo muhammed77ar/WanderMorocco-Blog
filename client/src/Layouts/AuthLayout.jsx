@@ -7,7 +7,7 @@ export default function AuthLayout() {
  
   
   return (
-    <div>
+    <div className=" font-lexend">
         <Navbar />
         <main>
             <Outlet />

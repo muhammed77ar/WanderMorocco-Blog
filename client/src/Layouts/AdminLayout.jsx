@@ -26,7 +26,7 @@ export default function AdminLayout() {
     }
   }, [isAuthenticated]);
   return (
-    <div>
+    <div className=" font-lexend">
         <Navbar />
         <main>
             <Outlet />

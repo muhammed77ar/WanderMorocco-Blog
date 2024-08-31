@@ -82,7 +82,7 @@ export default function Login() {
           </a>
           <div className="mt-4 flex items-center justify-between">
             <span className="border-b w-1/5 lg:w-1/4"></span>
-            <a href="#" className="text-xs text-center text-gray-500 uppercase">or login with email</a>
+            <a href="#" className="text-sm text-center text-gray-500">or login with email</a>
             <span className="border-b w-1/5 lg:w-1/4"></span>
           </div>
           <form onSubmit={handelSubmit}>

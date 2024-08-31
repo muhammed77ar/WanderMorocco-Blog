@@ -8,7 +8,9 @@ import UserNavbar from "../components/Navbars/UserNavbar";
 
 
 export default function UserLayout() {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated); 
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.auth.user)
+  console.log(user)
   const dispatch = useDispatch()
  
 
@@ -26,8 +28,9 @@ export default function UserLayout() {
     }
   }, [isAuthenticated]);
 
+
   return (
-    <div>
+    <div className=" font-lexend">
         <UserNavbar />
         <main>
             <Outlet />

@@ -6,7 +6,7 @@ export default function GuestLayout() {
  
   
   return (
-    <div>
+    <div className=" font-lexend">
       <Navbar />
       <main>
         <Outlet />

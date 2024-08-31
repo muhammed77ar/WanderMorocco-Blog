@@ -33,7 +33,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={` px-6 w-full flex items-center py-3 fixed top-0 z-20 transition-all ${scrolled ? "bg-black bg-opacity-90" : "bg-black bg-opacity-50"}`}>
+    <nav className={`px-6 w-full flex items-center py-3 fixed top-0 z-20 transition-all ${scrolled ? "bg-black bg-opacity-90" : "bg-black bg-opacity-50"}`}>
       <div className=" w-full flex justify-between items-center max-w-7xl mx-auto">
         <Link to={"/"}
           className=" flex items-center gap-2"
