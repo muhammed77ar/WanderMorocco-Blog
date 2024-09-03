@@ -4,7 +4,7 @@ export default function Modal({ open, onClose, children }) {
       <div
         onClick={onClose}
         className={`
-          fixed inset-0 flex justify-center items-center transition-colors
+          fixed inset-0 flex justify-center items-center transition-colors h-full
           ${open ? "visible bg-black/20" : "invisible"}
         `}
       >
@@ -12,7 +12,7 @@ export default function Modal({ open, onClose, children }) {
         <div
           onClick={(e) => e.stopPropagation()}
           className={`
-            bg-white rounded-xl shadow p-6 transition-all
+            bg-white rounded-xl shadow px-10 py-6 transition-all mt-[60px]
             ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}
           `}
         >

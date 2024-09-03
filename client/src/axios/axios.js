@@ -5,8 +5,9 @@ const axiosClient = axios.create({
   withCredentials: true,
   ithXSRFToken:true,
   headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
+    "Content-Type": ["application/json", "multipart/form-data"],
+    "Accept": "application/json",
+
   },
 });
 
