@@ -12,9 +12,9 @@ import axios from "axios";
 import axiosClient from "../axios/axios";
 
 export default function UserProfile() {
-  const [open, setOpen] = useState(false)
-  const [data, setData] = useState({})
+  const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [IsLoading, SetIsLoading] = useState(false)
   const [showConfirmationPassword, setConfirmationPassword] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const user = useSelector((state) => state.auth.user);
@@ -39,17 +39,19 @@ export default function UserProfile() {
   const handelSubmit = async (e) => {
     e.preventDefault();
     const payload = {
-      name : nameRef.current.value,
-      email : emailRef.current.value,
-      profile : profileRef.current.files[0],
-      password : passwordRef.current.value,
-      password_confirmation : confirmPasswordRef.current.value,
-      "_method" : "PUT"
+      name: nameRef.current.value,
+      email: emailRef.current.value,
+      profile: profileRef.current.files[0],
+      password: passwordRef.current.value,
+      password_confirmation: confirmPasswordRef.current.value,
+      "_method": "PUT"
     }
     try {
+      SetIsLoading(true)
       const response = await axiosClient.post(`api/users/${user?.id}`, payload)
-      if(response){
-        console.log(response)
+      if (response) {
+        setOpen(false)
+        document.location.reload();
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
@@ -59,13 +61,15 @@ export default function UserProfile() {
         // Other errors
         console.log(error);
       }
+    } finally {
+      SetIsLoading(false)
     }
-    
+
   }
 
 
   return (
-    <main className="profile-page">
+    <main className="">
       <section className="relative block h-[500px]">
         <div
           className="absolute top-0 w-full h-full bg-center bg-cover bg-[url('../images/trekking-jebel-toubkal-west-high-atlas-morocco.jpg')] bg-no-repeat"
@@ -119,89 +123,100 @@ export default function UserProfile() {
                       Edit Your Profile
                     </button>
                     <Modal open={open} onClose={() => setOpen(false)}>
-                    <form action="" onSubmit={handelSubmit} >
-                      <div className="grid my-auto mx-auto">
-                        <div
-                          className={`relative mx-auto flex justify-center w-[141px] ring-4 ring-[#d67940] h-[141px] rounded-full bg-cover bg-center bg-no-repeat`}>
-                            {previewImage ? 
-                            <img src={previewImage} alt="" className=" absolute rounded-full w-full h-full object-cover" />
-                            :
-                            <img src={import.meta.env.VITE_API_BASE_URL + user?.profile} alt="" className=" absolute rounded-full w-full h-full object-cover" />}
-                            
-                          <div className="bg-white/90 rounded-full w-6 h-6 text-center ml-28 mt-4">
+                      <form action="" onSubmit={handelSubmit} >
+                        <div className="grid my-auto mx-auto">
+                          <div
+                            className={`relative mx-auto flex justify-center w-[141px] ring-4 ring-[#d67940] h-[141px] rounded-full bg-cover bg-center bg-no-repeat`}>
+                            {previewImage ?
+                              <img src={previewImage} alt="" className=" absolute rounded-full w-full h-full object-cover" />
+                              :
+                              <img src={import.meta.env.VITE_API_BASE_URL + user?.profile} alt="" className=" absolute rounded-full w-full h-full object-cover" />}
 
-                            <input 
-                               ref={profileRef}
-                               type="file"
-                               name="profile"
-                               id="upload_profile"
-                               onChange={handleImageChange}
-                               hidden />
+                            <div className="bg-white/90 rounded-full w-6 h-6 text-center ml-28 mt-4">
 
-                            <label htmlFor="upload_profile">
-                              <svg data-slot="icon" className=" absolute text-blue-700 bg-gray-200 rounded-full z-10" fill="none"
-                                stroke-width="1.5" width="28" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z">
-                                </path>
-                                <path stroke-linecap="round" stroke-linejoin="round" 
-                                  d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z">
-                                </path>
-                              </svg>
-                            </label>
-                          </div>
-                        </div>
-                        
-                        <div className=" text-[#202142]">
-                          <div className="flex flex-col items-center justify-center w-full sm:mb-6">
-                            <div className="flex flex-col sm:flex-row justify-center gap-4">
-                              <div className="mt-4">
-                                <label className="block text-gray-700 text-left text-sm font-bold mb-1">Username</label>
-                                <input ref={nameRef} defaultValue={user?.name} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="text" />
-                              </div>
-                              <div className="mt-4">
-                                <label className="block text-gray-700 text-left text-sm font-bold mb-1">Email Address</label>
-                                <input ref={emailRef} defaultValue={user?.email} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="email" />
-                              </div>
-                            </div>
-                            <div className="flex flex-col sm:flex-row justify-center gap-4">
-                              <div className="mt-4 relative">
-                                <div className="flex justify-between">
-                                  <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                                </div>
-                                <input ref={passwordRef} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type={showPassword ? "text" : "password"} />
-                                <button
-                                  type="button"
-                                  onClick={() => setShowPassword(!showPassword)}
-                                  className="absolute top-12 right-3 transform -translate-y-1/2 text-gray-500"
-                                >
-                                  {showPassword ? <FaEyeSlash className="text-xl" /> : <FaEye className=" text-xl" />}
-                                </button>
-                              </div>
-                              <div className="mt-4 relative">
-                                <div className="flex justify-between">
-                                  <label className="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
-                                </div>
-                                <input ref={confirmPasswordRef} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type={showConfirmationPassword ? "text" : "password"} />
-                                <button
-                                  type="submit"
-                                  onClick={() => setConfirmationPassword(!showConfirmationPassword)}
-                                  className="absolute top-12 right-3 transform -translate-y-1/2 text-gray-500"
-                                >
-                                  {showConfirmationPassword ? <FaEyeSlash className="text-xl" /> : <FaEye className=" text-xl" />}
-                                </button>
-                              </div>
+                              <input
+                                ref={profileRef}
+                                type="file"
+                                name="profile"
+                                id="upload_profile"
+                                onChange={handleImageChange}
+                                hidden />
+
+                              <label htmlFor="upload_profile">
+                                <svg data-slot="icon" className=" absolute text-[#d67940] bg-gray-200 rounded-full z-10" fill="none"
+                                  stroke-width="1.5" width="28" stroke="currentColor" viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                  <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z">
+                                  </path>
+                                  <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z">
+                                  </path>
+                                </svg>
+                              </label>
                             </div>
                           </div>
-                          <div className=" w-full mt-4">
-                            <button className="w-full text-center px-6 py-4 text-white transition-all bg-gray-700  rounded-md shadow-xl hover:bg-gray-900 hover:text-white shadow-neutral-300 hover:shadow-2xl hover:shadow-neutral-400 hover:-tranneutral-y-px">
-                              Save Changes
-                            </button>
+
+                          <div className=" text-[#202142]">
+                            <div className="flex flex-col items-center justify-center w-full sm:mb-6">
+                              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                                <div className="mt-4">
+                                  <label className="block text-gray-700 text-left text-sm font-bold mb-1">Username</label>
+                                  <input ref={nameRef} defaultValue={user?.name} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="text" />
+                                </div>
+                                <div className="mt-4">
+                                  <label className="block text-gray-700 text-left text-sm font-bold mb-1">Email Address</label>
+                                  <input ref={emailRef} defaultValue={user?.email} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="email" />
+                                </div>
+                              </div>
+                              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                                <div className="mt-4 relative">
+                                  <div className="flex justify-between">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                                  </div>
+                                  <input ref={passwordRef} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type={showPassword ? "text" : "password"} />
+                                  <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute top-12 right-3 transform -translate-y-1/2 text-gray-500"
+                                  >
+                                    {showPassword ? <FaEyeSlash className="text-xl" /> : <FaEye className=" text-xl" />}
+                                  </button>
+                                </div>
+                                <div className="mt-4 relative">
+                                  <div className="flex justify-between">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+                                  </div>
+                                  <input ref={confirmPasswordRef} className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type={showConfirmationPassword ? "text" : "password"} />
+                                  <button
+                                    type="submit"
+                                    onClick={() => setConfirmationPassword(!showConfirmationPassword)}
+                                    className="absolute top-12 right-3 transform -translate-y-1/2 text-gray-500"
+                                  >
+                                    {showConfirmationPassword ? <FaEyeSlash className="text-xl" /> : <FaEye className=" text-xl" />}
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                            <div className=" w-full mt-4">
+                              {IsLoading ? <button type="submit" className="w-full flex justify-center items-center text-center px-6 py-5 text-white transition-all bg-[#d67940]  rounded-md shadow-xl hover:bg-[#b06130] hover:text-white shadow-neutral-300 hover:shadow-2xl hover:shadow-neutral-400 hover:-tranneutral-y-px">
+                                <div className="flex flex-row gap-2">
+                                  <div className="w-4 h-4 rounded-full bg-white  animate-bounce"></div>
+                                  <div
+                                    className="w-4 h-4 rounded-full bg-white  animate-bounce [animation-delay:-.3s]"
+                                  ></div>
+                                  <div
+                                    className="w-4 h-4 rounded-full bg-white animate-bounce [animation-delay:-.5s]"
+                                  ></div>
+                                </div>
+                              </button>
+                                : <button className="w-full text-center px-6 py-4 text-white transition-all bg-[#d67940]  rounded-md shadow-xl hover:bg-[#b06130] hover:text-white shadow-neutral-300 hover:shadow-2xl hover:shadow-neutral-400 hover:-tranneutral-y-px">
+                                  Save Changes
+                                </button>}
+                            </div>
                           </div>
+
                         </div>
-                        
-                      </div>
                       </form>
                     </Modal>
                   </div>

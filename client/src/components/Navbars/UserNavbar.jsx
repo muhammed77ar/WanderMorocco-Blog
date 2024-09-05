@@ -95,7 +95,7 @@ export default function UserNavbar() {
                 </ul>
                 <button id="dropdownUserAvatarButton" onClick={toggleDropdown} data-dropdown-toggle="dropdownAvatar" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
                             <span className="sr-only">Open user menu</span>
-                            <img className="w-10 h-10 rounded-full" src={import.meta.env.VITE_API_BASE_URL + user?.profile} alt="user photo" />
+                            <img className="w-10 h-10 rounded-full object-cover" src={import.meta.env.VITE_API_BASE_URL + user?.profile} alt="user photo" />
                         </button>
                 {/* Dropdown menu */}
                 {dropdownOpen && (

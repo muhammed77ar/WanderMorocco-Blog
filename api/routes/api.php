@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthGoogle;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,4 @@ Route::get('auth/google', [AuthGoogle::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [AuthGoogle::class, 'handleGoogleCallback']);
 
 Route::apiResource("users", UserController::class);
+Route::middleware('auth:sanctum')->post('/posts', [PostController::class, 'store']);
