@@ -110,6 +110,11 @@ const handleDrop = (e) => {
       console.error('There was an error creating the post!', error.response);
     }
   };
+  const handelReset = () => {
+    contentRef.current.value = "";
+    setImagePreviews([]);
+    setFileList([]);
+  }
 
   return (
     <div className="py-20 bg-[url('../images/2150763780.jpg')] bg-no-repeat bg-cover">
@@ -154,8 +159,8 @@ const handleDrop = (e) => {
                     </g>
                   </svg>
                 </div>
-                <h2 className="text-center text-gray-400 text-xs font-normal leading-4 mb-1">PNG, JPG or PDF, smaller than 15MB</h2>
-                <h4 className="text-center text-gray-900 text-sm font-medium leading-snug">Drag and Drop your file here or</h4>
+                <h2 className="text-center text-gray-400 text-xs font-normal leading-4 mb-1">JPG, JPEG, PNG or GIF, smaller than 3MB</h2>
+                <h4 className="text-center text-gray-900 text-sm font-medium leading-snug">Drag and Drop your images here or choose images</h4>
               </div>}
             <input
               id="file-input"
@@ -169,7 +174,7 @@ const handleDrop = (e) => {
 
           {/* buttons */}
           <div className="buttons flex">
-            <button type="button" className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-white ml-auto">Cancel</button>
+            <button type="button" onClick={handelReset} className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-white ml-auto">Cancel</button>
             <button type="submit" className="btn border-none p-1 px-6 font-semibold cursor-pointer text-white ml-2 bg-[#d67940]">Post</button>
           </div>
         </div>
