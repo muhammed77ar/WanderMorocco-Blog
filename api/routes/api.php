@@ -32,3 +32,4 @@ Route::get('auth/google/callback', [AuthGoogle::class, 'handleGoogleCallback']);
 
 Route::apiResource("users", UserController::class);
 Route::middleware('auth:sanctum')->post('/posts', [PostController::class, 'store']);
+Route::get('/posts', [PostController::class, 'index']);

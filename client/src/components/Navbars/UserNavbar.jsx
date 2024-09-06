@@ -9,7 +9,7 @@ import { CgProfile } from "react-icons/cg";
 const navLinks = [
     { page: "Home", href: "user/" },
     { page: "About", href: "user/about" },
-    { page: "Articles", href: "user/articles" },
+    { page: "Discover Journeys", href: "user/articles" },
 ];
 export default function UserNavbar() {
     const user = useSelector((state) => state.auth.user)
@@ -84,7 +84,7 @@ export default function UserNavbar() {
                         </li>
                     ))}
                     <li>
-                        <Link to={"/user/postArticle"} className=" text-white bg-[#d67940] px-2 py-1 rounded-full font-medium flex justify-center items-center hover:bg-[#c06b36] transition-all">
+                        <Link to={"/user/postArticle"} onClick={() =>  setActive("")} className=" text-white bg-[#d67940] px-2 py-1 rounded-full font-medium flex justify-center items-center hover:bg-[#c06b36] transition-all">
                             Share your journey
                             <span className="mt-[2px]">
                                 <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" className="w-5 h-5 fill-current"><path fill="currentColor" d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"></path>
