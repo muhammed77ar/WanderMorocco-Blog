@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 
-export default function Modal({ open, onClose, children }) {
-  
+export default function Modal2({ open, onClose, children }) {
+
 
   return (
     // backdrop
     <div
       onClick={onClose}
       className={`
-          fixed inset-0 flex justify-center items-center transition-colors h-full z-10 overflow-y-scroll
+          fixed inset-0 flex justify-center items-end transition-colors h-full z-10 overflow-y-scroll
           ${open ? "visible bg-black/20" : "invisible"}
         `}
     >
@@ -16,7 +16,7 @@ export default function Modal({ open, onClose, children }) {
       <div
         onClick={(e) => e.stopPropagation()}
         className={`
-            bg-white rounded-xl shadow px-10 py-6 transition-all mt-[60px]
+            bg-white  rounded-t-3xl shadow px-5 py-6 transition-all w-[80%] mt-[50px]
             ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}
           `}
       >
@@ -28,6 +28,7 @@ export default function Modal({ open, onClose, children }) {
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
+
         </button>
         {children}
       </div>

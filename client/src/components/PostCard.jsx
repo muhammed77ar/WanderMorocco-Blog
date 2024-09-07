@@ -1,7 +1,27 @@
 import Slider from "./PostSlider/Slider";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa";
+import Modal from "./Modal";
+import { useEffect, useState } from "react";
+import CommentSection from "./CommentSection";
+import Modal2 from "./Modal2";
 export default function PostCard({ post }) {
+    const [open, setOpen] = useState(false);
+    // Use useEffect to handle scroll disabling when modal is open
+  useEffect(() => {
+    if (open) {
+      // Disable scrolling
+      document.body.style.overflow = "hidden";
+    } else {
+      // Enable scrolling
+      document.body.style.overflow = "auto";
+    }
+
+    // Cleanup when component is unmounted or open state changes
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [open]);
     function formatJoinDate(dateString) {
         const date = new Date(dateString);
         const day = date.getDate();
@@ -60,10 +80,15 @@ export default function PostCard({ post }) {
                         <FaRegHeart className=" text-xl" />
                         <span className=" text-lg">12</span>
                     </div>
-                    <div className="flex items-center justify-center gap-1 text-gray-700 text-sm">
+                    <div onClick={() => setOpen(true)} className="flex cursor-pointer items-center justify-center gap-1 text-gray-700 text-sm">
                         <FaRegComment className=" text-xl" />
                         <span className=" text-lg">8</span>
                     </div>
+                    <Modal2 open={open} onClose={() => setOpen(false)}>
+                        <div className="h-[80vh] overflow-y-scroll">
+                        <CommentSection />
+                        </div>
+                    </Modal2>
                 </div>
             </div>
         </div>
