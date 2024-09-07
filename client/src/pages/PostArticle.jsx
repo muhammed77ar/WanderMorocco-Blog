@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
 import axiosClient from "../axios/axios";
-
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2"
 
 export default function PostArticle() {
   const contentRef = useRef(null);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [fileList, setFileList] = useState([]);
   const [dragging, setDragging] = useState(false);
+  const navigate = useNavigate();
 
   const MAX_FILE_SIZE = 3048 * 1024; // 2 MB in bytes
 
@@ -99,7 +101,16 @@ const handleDrop = (e) => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      alert('Post created successfully!');
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your journey has been successfully posted.',
+        showConfirmButton: false,
+        timer: 2000,
+        willClose: () => {
+            navigate('/user/articles');
+        }
+    });
       console.log(response.data);
 
       // Clear the input fields and states

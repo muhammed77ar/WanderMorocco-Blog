@@ -12,7 +12,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post = Post::with('user')->get();
+        $post = Post::with('user')->orderBy('created_at', 'desc')->get();
         return response()->json(["posts" => $post]);
     }
 

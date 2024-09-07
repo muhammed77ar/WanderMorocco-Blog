@@ -10,6 +10,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import axiosClient from "../axios/axios";
+import PostCard from "../components/PostCard";
 
 export default function UserProfile() {
   const [open, setOpen] = useState(false);
@@ -251,14 +252,18 @@ export default function UserProfile() {
                   Member of the WanderMorocco community.
                 </div>
               </div>
-              <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
+              <div className="mt-10 py-10 border-t border-blueGray-200">
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full lg:w-9/12 px-4">
                     <h1 className="mb-10 font-normal text-4xl leading-relaxed text-blueGray-700 flex justify-center items-center gap-2">
                       <FaSignsPost className=" text-[#d67940]" />
                       Your journeys
                     </h1>
-                    <UserPosts />
+                    <div className=" flex flex-col justify-center mb-5 items-center w-full  gap-10 md:mr-3">
+                      {user?.posts.map(post => (
+                        <UserPosts key={post?.id} post={post} user={user} />
+                      ))}
+                    </div>
                     <a href="#pablo" className="font-normal text-[#d67940]">
                       Show more
                     </a>

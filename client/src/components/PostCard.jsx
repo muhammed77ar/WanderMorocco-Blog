@@ -1,7 +1,6 @@
 import Slider from "./PostSlider/Slider";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa";
-import Modal from "./Modal";
 import { useEffect, useState } from "react";
 import CommentSection from "./CommentSection";
 import Modal2 from "./Modal2";

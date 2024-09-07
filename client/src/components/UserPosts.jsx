@@ -1,157 +1,96 @@
+import { FaRegComment, FaRegHeart } from "react-icons/fa";
+import CommentSection from "./CommentSection";
+import Modal2 from "./Modal2";
+import Slider from "./PostSlider/Slider";
+import { useEffect, useState } from "react";
 
-export default function UserPosts() {
+export default function UserPosts({post, user}) {
+    const [open, setOpen] = useState(false);
+    // Use useEffect to handle scroll disabling when modal is open
+  useEffect(() => {
+    if (open) {
+      // Disable scrolling
+      document.body.style.overflow = "hidden";
+    } else {
+      // Enable scrolling
+      document.body.style.overflow = "auto";
+    }
+
+    // Cleanup when component is unmounted or open state changes
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [open]);
+    function formatJoinDate(dateString) {
+        const date = new Date(dateString);
+        const day = date.getDate();
+        const month = date.toLocaleString("en-US", { month: "short" });
+        const year = date.getFullYear();
+
+        return `Joined ${day} ${month} ${year}`;
+    }
+    function timeAgo(dateString) {
+        const now = new Date();
+        const postDate = new Date(dateString);
+        const diffInSeconds = Math.floor((now - postDate) / 1000);
+
+        const secondsInMinute = 60;
+        const secondsInHour = 3600;
+        const secondsInDay = 86400;
+
+        if (diffInSeconds < secondsInMinute) {
+            return `${diffInSeconds}s ago`;
+        } else if (diffInSeconds < secondsInHour) {
+            const minutes = Math.floor(diffInSeconds / secondsInMinute);
+            return `${minutes}m ago`;
+        } else if (diffInSeconds < secondsInDay) {
+            const hours = Math.floor(diffInSeconds / secondsInHour);
+            return `${hours}h ago`;
+        } else {
+            const days = Math.floor(diffInSeconds / secondsInDay);
+            return `${days}d ago`;
+        }
+    }
     return (
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-center space-x-4">
-            <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700 mb-4">
-                <a href="#">
-                    <img
-                        className="rounded-t-lg"
-                        src="https://flowbite.com/docs/images/blog/image-1.jpg"
-                        alt=""
-                    />
-                </a>
-                <div className="p-5">
-                    <a href="#">
-                        <h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
-                            Noteworthy technology acquisitions 2021
-                        </h5>
-                    </a>
-                    <p className="font-normal text-gray-700 mb-3 dark:text-gray-400">
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                    <a
-                        href="#"
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                        Read more
-                        <svg
-                            className="-mr-1 ml-2 h-4 w-4"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </a>
+        <div className="flex  justify-center px-6 py-6 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg w-[90%] md:w-[80%] h-auto">
+            <div className="flex flex-col w-full">
+                <div className="flex w-full items-center justify-between">
+                    <div className="flex">
+                        <img
+                            className="w-12 h-12 rounded-full object-cover mr-4 shadow"
+                            src={import.meta.env.VITE_API_BASE_URL + user?.profile}
+                            alt="avatar"
+                        />
+                        <div className=" flex flex-col">
+                            <h2 className="text-lg font-semibold text-gray-900 -mt-1">{user?.name}</h2>
+                            <p className="text-gray-700">{formatJoinDate(user?.created_at)}</p>
+                        </div>
+                    </div>
+                    <small className="text-sm text-gray-700">{timeAgo(post?.created_at)}</small>
                 </div>
-            </div>
-
-            <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700 mb-4">
-                <a href="#">
-                    <img
-                        className="rounded-t-lg"
-                        src="https://flowbite.com/docs/images/blog/image-1.jpg"
-                        alt=""
-                    />
-                </a>
-                <div className="p-5">
-                    <a href="#">
-                        <h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
-                            Noteworthy technology acquisitions 2021
-                        </h5>
-                    </a>
-                    <p className="font-normal text-gray-700 mb-3 dark:text-gray-400">
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
+                <div className="w-full flex flex-col">
+                    <p className="my-6 text-gray-700 text-sm w-full break-words">
+                        {post?.content}
                     </p>
-                    <a
-                        href="#"
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                        Read more
-                        <svg
-                            className="-mr-1 ml-2 h-4 w-4"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </a>
+                    <Slider images={post?.images} />
                 </div>
-            </div>
-            <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700 mb-4">
-                <a href="#">
-                    <img
-                        className="rounded-t-lg"
-                        src="https://flowbite.com/docs/images/blog/image-1.jpg"
-                        alt=""
-                    />
-                </a>
-                <div className="p-5">
-                    <a href="#">
-                        <h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
-                            Noteworthy technology acquisitions 2021
-                        </h5>
-                    </a>
-                    <p className="font-normal text-gray-700 mb-3 dark:text-gray-400">
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                    <a
-                        href="#"
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                        Read more
-                        <svg
-                            className="-mr-1 ml-2 h-4 w-4"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
-            <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700 mb-4">
-                <a href="#">
-                    <img
-                        className="rounded-t-lg"
-                        src="https://flowbite.com/docs/images/blog/image-1.jpg"
-                        alt=""
-                    />
-                </a>
-                <div className="p-5">
-                    <a href="#">
-                        <h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
-                            Noteworthy technology acquisitions 2021
-                        </h5>
-                    </a>
-                    <p className="font-normal text-gray-700 mb-3 dark:text-gray-400">
-                        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                    </p>
-                    <a
-                        href="#"
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                        Read more
-                        <svg
-                            className="-mr-1 ml-2 h-4 w-4"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </a>
+                <div className="mt-4 flex items-center">
+                    <div className="flex justify-center items-center gap-1 text-gray-700 text-sm mr-3">
+                        <FaRegHeart className=" text-xl" />
+                        <span className=" text-lg">12</span>
+                    </div>
+                    <div onClick={() => setOpen(true)} className="flex cursor-pointer items-center justify-center gap-1 text-gray-700 text-sm">
+                        <FaRegComment className=" text-xl" />
+                        <span className=" text-lg">8</span>
+                    </div>
+                    <Modal2 open={open} onClose={() => setOpen(false)}>
+                        <div className="h-[80vh] overflow-y-scroll">
+                        <CommentSection />
+                        </div>
+                    </Modal2>
                 </div>
             </div>
         </div>
+
     )
 }

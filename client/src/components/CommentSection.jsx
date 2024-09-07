@@ -1,28 +1,16 @@
-
+import { IoMdSend } from "react-icons/io";
 export default function CommentSection() {
   return (
     <section className="relative">
     <div className="w-full max-w-7xl md:px-5 lg:px-5 mx-auto">
         <div className="w-full flex-col justify-start items-start lg:gap-7 gap-7 inline-flex">
             <h2 className="text-gray-900 text-4xl font-bold font-manrope leading-normal">Comments</h2>
-            <div className="w-full relative flex justify-between gap-2">
+            <div className="w-full relative flex justify-between items-center gap-2">
                     <input type="text"
                         className="w-full py-3 px-5 rounded-lg border border-gray-300 bg-white shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed"
                         placeholder="Leave a comment..." />
-                    <a href="" className="absolute right-6 top-[18px]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                            fill="none">
-                            <g clip-path="url(#clip0_2063_2504)">
-                                <path
-                                    d="M10.0194 1.66699V5.6556C1.69526 5.6556 1.54178 14.4163 1.69573 18.3337C1.69573 16.4818 5.84659 10.0003 10.0194 10.6414V14.63L18.3332 8.14847L10.0194 1.66699Z"
-                                    stroke="#111827" stroke-width="1.6" stroke-linejoin="round" />
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_2063_2504">
-                                    <rect width="20" height="20" fill="white" />
-                                </clipPath>
-                            </defs>
-                        </svg>
+                    <a href="" className="absolute right-6">
+                        <IoMdSend className="text-2xl text-[#d67940]" />
                     </a>
                 </div>
             <div className="w-full flex-col justify-start items-start gap-8 flex">
@@ -109,7 +97,7 @@ export default function CommentSection() {
                                     className="px-2 text-gray-900 text-base font-semibold leading-relaxed">Delete</span>
                             </button>
                             <button
-                                className="sm:w-fit w-full px-5 py-2.5 bg-green-600 hover:bg-green-700 transition-all duration-700 ease-in-out rounded-xl shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] justify-center items-center flex">
+                                className="sm:w-fit w-full px-5 py-2.5 bg-[#d67940] hover:bg-[#b5622f] transition-all duration-700 ease-in-out rounded-xl shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] justify-center items-center flex">
                                 <span
                                     className="px-2 py-px text-white text-base font-semibold leading-relaxed">Edit</span>
                             </button>

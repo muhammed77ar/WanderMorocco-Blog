@@ -23,7 +23,7 @@ Route::middleware(['auth:sanctum,admin'])->get('/user', function (Request $reque
     if ($user->role === "admin") {
         return ["user" => $user];
     }else{
-        return ["user" => $user];
+        return ["user" => $user->load('posts')];
     };
 });
 
