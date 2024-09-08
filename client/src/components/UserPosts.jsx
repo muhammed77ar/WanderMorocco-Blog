@@ -77,15 +77,15 @@ export default function UserPosts({post, user}) {
                 <div className="mt-4 flex items-center">
                     <div className="flex justify-center items-center gap-1 text-gray-700 text-sm mr-3">
                         <FaRegHeart className=" text-xl" />
-                        <span className=" text-lg">12</span>
+                        <span className=" text-lg">{post?.likes.length}</span>
                     </div>
                     <div onClick={() => setOpen(true)} className="flex cursor-pointer items-center justify-center gap-1 text-gray-700 text-sm">
                         <FaRegComment className=" text-xl" />
-                        <span className=" text-lg">8</span>
+                        <span className=" text-lg">{post?.comments.length}</span>
                     </div>
                     <Modal2 open={open} onClose={() => setOpen(false)}>
-                        <div className="h-[80vh] overflow-y-scroll">
-                        <CommentSection />
+                        <div className="h-[75vh] overflow-y-scroll">
+                        <CommentSection comments={post?.comments} postId={post?.id} />
                         </div>
                     </Modal2>
                 </div>

@@ -31,7 +31,7 @@ export default function Slider({ images }) {
                 images.map((image, key) => (
                     <SwiperSlide className=' w-[100%]' key={key}>
                         <img src={import.meta.env.VITE_API_BASE_URL + image}
-                        className=' w-full h-full object-contain' alt="" />
+                        className=' w-full h-full object-cover' alt="" />
                     </SwiperSlide>
                 ))
             }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthGoogle;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -23,7 +25,18 @@ Route::middleware(['auth:sanctum,admin'])->get('/user', function (Request $reque
     if ($user->role === "admin") {
         return ["user" => $user];
     }else{
-        return ["user" => $user->load('posts')];
+        // // Load posts with comments and likes
+        // $userPosts = $user->posts()->with([
+        //     'comments.user', // Load the user who wrote each comment
+        //     'likes.user'     // Load the user who liked the post
+        // ])->get();
+
+        return ["user" => $user->load(['posts' => function ($query) {
+            $query->with([
+                'comments.user', // Load the user who wrote each comment
+                'likes.user'     // Load the user who liked the post
+            ]);
+        }])];
     };
 });
 
@@ -31,5 +44,13 @@ Route::get('auth/google', [AuthGoogle::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [AuthGoogle::class, 'handleGoogleCallback']);
 
 Route::apiResource("users", UserController::class);
-Route::middleware('auth:sanctum')->post('/posts', [PostController::class, 'store']);
 Route::get('/posts', [PostController::class, 'index']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/posts', [PostController::class, 'store']);
+    Route::post('/posts/{postId}/comments', [CommentController::class, 'store']);
+    Route::post('/posts/{postId}/likes', [LikeController::class, 'toggleLike']);
+});
+
+Route::get('/posts/{postId}/comments', [CommentController::class, 'index']);
+Route::get('/posts/{postId}/likes', [LikeController::class, 'index']);
