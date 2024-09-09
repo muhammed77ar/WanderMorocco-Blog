@@ -25,18 +25,19 @@ Route::middleware(['auth:sanctum,admin'])->get('/user', function (Request $reque
     if ($user->role === "admin") {
         return ["user" => $user];
     }else{
-        // // Load posts with comments and likes
-        // $userPosts = $user->posts()->with([
-        //     'comments.user', // Load the user who wrote each comment
-        //     'likes.user'     // Load the user who liked the post
-        // ])->get();
+        // Load the user's posts and comments authored by the user
+        $userWithRelations = $user->load([
+            'posts' => function ($query) {
+                $query->with([
+                    'comments.user', // Load the user who wrote each comment on the post
+                    'likes.user'     // Load the user who liked the post
+                ]);
+            },
+            'comments.post' // Load the posts for comments authored by the user
+        ]);
 
-        return ["user" => $user->load(['posts' => function ($query) {
-            $query->with([
-                'comments.user', // Load the user who wrote each comment
-                'likes.user'     // Load the user who liked the post
-            ]);
-        }])];
+        // Return user with appended counts and loaded relationships
+        return ["user" => $userWithRelations];
     };
 });
 

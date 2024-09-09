@@ -59,4 +59,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Like::class);
     }
+
+    // Accessor to get post count
+    public function getPostCountAttribute()
+    {
+        return $this->posts()->count();
+    }
+
+    // Accessor to get comment count
+    public function getCommentCountAttribute()
+    {
+        return $this->comments()->count();
+    }
+
+    // Append the post_count and comment_count attributes
+    protected $appends = ['post_count', 'comment_count'];
 }

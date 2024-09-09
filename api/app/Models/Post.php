@@ -34,4 +34,9 @@ class Post extends Model
     {
         return $this->hasMany(Like::class);
     }
+
+    public function isLikedByUser($userId)
+    {
+        return $this->likes()->where('user_id', $userId)->exists();
+    }
 }
