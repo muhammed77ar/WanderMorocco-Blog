@@ -7,14 +7,45 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function getLastThreePosts()
+    {
+        $user = auth()->user(); // Get authenticated user or null if not logged in
+
+        // Fetch the last 3 posts, with relationships and likes count
+        $posts = Post::with([
+            'user',
+            'comments.user',
+            'likes',
+            'comments' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }
+        ])
+            ->orderBy('created_at', 'desc') // Order by latest
+            ->take(3) // Limit to 3 posts
+            ->get()
+            ->map(function ($post) use ($user) {
+                // Add is_liked_by_user and likes_count
+                $post->is_liked_by_user = $user ? $post->isLikedByUser($user->id) : false;
+                $post->likes_count = $post->likes->count();
+                return $post;
+            });
+
+        return response()->json(['posts' => $posts]);
+    }
+
+
     public function index()
     {
         $user = auth()->user(); // Get the authenticated user or null if not logged in
 
-        $posts = Post::with(['user', 'comments.user', 'likes'])
+        $posts = Post::with([
+            'user',
+            'comments.user',
+            'likes',
+            'comments' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }
+        ])
             ->orderBy('created_at', 'desc')
             ->get()
             ->map(function ($post) use ($user) {
@@ -25,6 +56,7 @@ class PostController extends Controller
 
         return response()->json(['posts' => $posts]);
     }
+
 
 
     /**

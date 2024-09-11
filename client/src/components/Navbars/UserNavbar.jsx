@@ -93,7 +93,7 @@ export default function UserNavbar() {
                         </Link>
                     </li>
                 </ul>
-                <button id="dropdownUserAvatarButton" onClick={toggleDropdown} data-dropdown-toggle="dropdownAvatar" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+                <button id="dropdownUserAvatarButton" onClick={() => {toggleDropdown(); setActive("")}} data-dropdown-toggle="dropdownAvatar" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
                             <span className="sr-only">Open user menu</span>
                             <img className="w-10 h-10 rounded-full object-cover" src={import.meta.env.VITE_API_BASE_URL + user?.profile} alt="user photo" />
                         </button>
@@ -101,7 +101,7 @@ export default function UserNavbar() {
                 {dropdownOpen && (
                     <div id="dropdownAvatar" className="absolute right-2 top-full mt-1 z-20 bg-slate-600 divide-y divide-gray-100 rounded-lg shadow w-44">
                         <div className="px-4 py-3 text-sm text-white">
-                            <div>{user?.name || "Bonnie Green"}</div>
+                            <div>{user?.name || "WanderMorocco Member"}</div>
                             <div className="font-medium truncate">{user?.email || "name@flowbite.com"}</div>
                         </div>
                         {/* <ul className="text-sm text-white">

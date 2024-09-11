@@ -10,7 +10,13 @@ export default function PostCard({ post }) {
     const [isLiked, setIsLiked] = useState(post.is_liked_by_user);
     const [likesCount, setLikesCount] = useState(post.likes_count);
 
-    console.log(isLiked)
+
+
+    // Ensure the component's like status and count are updated if the post data changes
+    useEffect(() => {
+        setIsLiked(post.is_liked_by_user);  // Re-initialize 'isLiked' after post reload
+        setLikesCount(post.likes_count);
+    }, [post]);
 
 
     // Function to handle like/unlike post
@@ -26,11 +32,7 @@ export default function PostCard({ post }) {
         }
     };
 
-    // Ensure the component's like status and count are updated if the post data changes
-    useEffect(() => {
-        setIsLiked(post.is_liked_by_user);  // Re-initialize 'isLiked' after post reload
-        setLikesCount(post.likes_count);
-    }, [post]);
+
 
 
     useEffect(() => {
@@ -93,8 +95,8 @@ export default function PostCard({ post }) {
                 </div>
 
                 <div className="mt-4 flex items-center">
-                <div 
-                        onClick={handleLike} 
+                    <div
+                        onClick={handleLike}
                         className={`flex cursor-pointer items-center justify-center gap-1 text-gray-700 text-sm mr-3 ${isLiked ? 'text-red-500' : ''}`}>
                         {isLiked ? <FaHeart className="text-xl" /> : <FaRegHeart className="text-xl" />}
                         <span className="text-lg">{likesCount}</span>

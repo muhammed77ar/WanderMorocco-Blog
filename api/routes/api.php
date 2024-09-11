@@ -25,13 +25,13 @@ Route::middleware(['auth:sanctum,admin'])->get('/user', function (Request $reque
     if ($user->role === "admin") {
         return ["user" => $user];
     }else{
-        // Load the user's posts and comments authored by the user
+        // Load the user's posts and append the 'likes_count' for each post
         $userWithRelations = $user->load([
             'posts' => function ($query) {
                 $query->with([
                     'comments.user', // Load the user who wrote each comment on the post
                     'likes.user'     // Load the user who liked the post
-                ]);
+                ])->withCount('likes'); // Append the likes count for each post
             },
             'comments.post' // Load the posts for comments authored by the user
         ]);
@@ -46,6 +46,7 @@ Route::get('auth/google/callback', [AuthGoogle::class, 'handleGoogleCallback']);
 
 Route::apiResource("users", UserController::class);
 Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/last-three', [PostController::class, 'getLastThreePosts']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/posts', [PostController::class, 'store']);
