@@ -1,7 +1,7 @@
 export default function WorkingOn() {
   return (
     <div className=" h-screen  flex justify-center items-center gap-3">
-      <h1 className="bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent uppercase font-bold text-5xl">We working on it</h1>
+      <h1 className="bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent uppercase font-bold text-5xl">We are working on admin dashboard.</h1>
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-12 h-12 animate-spin"
     viewBox="0 0 16 16">
     <path

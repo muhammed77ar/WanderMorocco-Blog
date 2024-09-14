@@ -25,7 +25,7 @@ export default function LatestJourneysSection() {
     console.log(LatestPosts)
 
     return (
-        <div>
+        <div className=" my-16">
             <h1 className="text-4xl font-medium mx-10 mt-10">
 				Latest Journeys
 			</h1>

@@ -260,13 +260,18 @@ export default function UserProfile() {
                       Your journeys
                     </h1>
                     <div className=" flex flex-col justify-center mb-5 items-center w-full  gap-10 md:mr-3">
-                      {user?.posts.map(post => (
-                        <UserPosts key={post?.id} post={post} user={user} />
-                      ))}
+                      {user?.posts.length > 0 ?
+
+                        <>
+                        { user?.posts.map(post => (
+                          <UserPosts key={post?.id} post={post} user={user} />
+                        ))} 
+                        </>
+                        : 
+                        <div>No posts yet</div>
+
+                      }
                     </div>
-                    <a href="#pablo" className="font-normal text-[#d67940]">
-                      Show more
-                    </a>
                   </div>
                 </div>
               </div>

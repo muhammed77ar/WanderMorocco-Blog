@@ -1,7 +1,7 @@
 export default function Features() {
     return (
         <>
-            <section className="bg-white my-10 mx-10">
+            <section className="bg-white my-16 mx-10">
                 <div className="container py-10 mx-auto">
                     <div className="lg:flex lg:items-center">
                         <div className="w-full space-y-12 lg:w-1/2 ">

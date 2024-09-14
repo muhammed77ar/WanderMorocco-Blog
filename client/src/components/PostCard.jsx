@@ -9,6 +9,7 @@ export default function PostCard({ post }) {
     const [open, setOpen] = useState(false);
     const [isLiked, setIsLiked] = useState(post.is_liked_by_user);
     const [likesCount, setLikesCount] = useState(post.likes_count);
+    const [isExpanded, setIsExpanded] = useState(false); // State for showing full text
 
 
 
@@ -69,6 +70,10 @@ export default function PostCard({ post }) {
         return `${Math.floor(diffInSeconds / 86400)}d ago`;
     }
 
+    const MAX_CONTENT_LENGTH = 300; // Max length of visible content
+
+    const displayedContent = isExpanded ? post?.content : `${post?.content.slice(0, MAX_CONTENT_LENGTH)}${post?.content.length > MAX_CONTENT_LENGTH ? '...' : ''}`;
+
 
 
     return (
@@ -90,7 +95,16 @@ export default function PostCard({ post }) {
                 </div>
 
                 <div className="w-full flex flex-col">
-                    <p className="my-6 text-gray-700 text-sm w-full break-words">{post?.content}</p>
+                    <p className="my-6 text-gray-700 text-sm w-full break-words">
+                    {displayedContent}{post?.content.length > MAX_CONTENT_LENGTH && (
+                            <button
+                                onClick={() => setIsExpanded(!isExpanded)}
+                                className="text-blue-500 text-xs hover:underline ml-1"
+                            >
+                                {isExpanded ? 'Read Less' : 'Read More'}
+                            </button>
+                        )}
+                    </p>
                     <Slider images={post?.images} />
                 </div>
 

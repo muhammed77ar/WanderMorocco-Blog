@@ -27,7 +27,7 @@ export default function Articles() {
     </>;
 }
   return (
-    <div className=" flex flex-col justify-center items-center w-full my-[100px] gap-10 md:mr-3">
+    <div className=" flex flex-col bg-gray-100 justify-center items-center w-full py-[100px] gap-10 md:mr-3">
       {posts.map(post => (
         <PostCard key={post?.id} post={post} />
       ))}
