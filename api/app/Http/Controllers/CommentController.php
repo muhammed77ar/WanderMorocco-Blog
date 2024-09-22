@@ -9,10 +9,12 @@ class CommentController extends Controller
 {
     public function index($postId)
     {
-        // Get comments for a specific post along with the user who wrote the comment
-        $comment = Comment::with('user')->where('post_id', $postId)->get();
+        $comments = Comment::with('user')
+            ->where('post_id', $postId)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        return response()->json(['comments' => $comment]);
+        return response()->json(['comments' => $comments]);
     }
 
     public function store(Request $request, $postId)

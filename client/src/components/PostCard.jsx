@@ -13,6 +13,7 @@ export default function PostCard({ post }) {
 
 
 
+
     // Ensure the component's like status and count are updated if the post data changes
     useEffect(() => {
         setIsLiked(post.is_liked_by_user);  // Re-initialize 'isLiked' after post reload
@@ -118,12 +119,12 @@ export default function PostCard({ post }) {
 
                     <div onClick={() => setOpen(true)} className="flex cursor-pointer items-center justify-center gap-1 text-gray-700 text-sm">
                         <FaRegComment className="text-xl" />
-                        <span className="text-lg">{post?.comments?.length}</span>
+                        <span className="text-lg">{post?.comments_count}</span>
                     </div>
 
                     <Modal2 open={open} onClose={() => setOpen(false)}>
                         <div className="h-[75vh] overflow-y-scroll">
-                            <CommentSection comments={post?.comments} postId={post?.id} />
+                            <CommentSection postId={post?.id} />
                         </div>
                     </Modal2>
                 </div>

@@ -10,37 +10,32 @@ class LikeController extends Controller
 {
     public function index($postId)
     {
-        // Get likes for a specific post along with the user who liked it
-        $like = Like::with('user')->where('post_id', $postId)->get();
-
-        return response()->json(['likes' => $like]);
+        $likes = Like::where('post_id', $postId)->get();
+        return response()->json(['likes' => $likes]);
     }
 
     public function toggleLike($postId)
     {
         $user = auth()->user();  // Get the authenticated user
-        $post = Post::find($postId);
+        $post = Post::findOrFail($postId);  // Find the post
 
-        if (!$post) {
-            return response()->json(['message' => 'Post not found'], 404);
-        }
-
-        // Check if the user has already liked the post
-        $like = $user->likes()->where('post_id', $postId)->first();
-
-        if ($like) {
-            // If the user already liked the post, remove the like
-            $like->delete();
+        if ($post->isLikedByUser($user->id)) {
+            // If already liked, remove the like
+            $post->likes()->where('user_id', $user->id)->delete();
             $isLikedByUser = false;
         } else {
-            // If the user has not liked the post yet, create a new like
-            $user->likes()->create(['post_id' => $postId]);
+            // Otherwise, add a like
+            $post->likes()->create([
+                'user_id' => $user->id,
+                'is_liked_by_user' => true
+            ]);
             $isLikedByUser = true;
         }
 
-        // Get the updated like count
-        $likesCount = $post->likes->count();
+        // Fetch the updated likes count
+        $likesCount = $post->likes()->count();
 
+        // Return the updated like status and likes count
         return response()->json([
             'is_liked_by_user' => $isLikedByUser,
             'likes_count' => $likesCount,

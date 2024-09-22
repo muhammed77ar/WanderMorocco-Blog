@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react";
 import { IoMdSend } from "react-icons/io";
 import axiosClient from "../axios/axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-export default function CommentSection({ postId, comments }) {
+export default function CommentSection({ postId }) {
+    const [comments, setComments] = useState([])
+    const user = useSelector((state) => state.auth.user)
     const conteRef = useRef()
     const submitComment = async (e) => {
         e.preventDefault();
@@ -18,7 +20,21 @@ export default function CommentSection({ postId, comments }) {
         }
     };
 
-    console.log(comments)
+    const FetchComments = async () => {
+        try {
+            const response = await axiosClient.get(`/api/posts/${postId}/comments`);
+            if (response) {
+                setComments(response?.data?.comments);
+            }
+        } catch (error) {
+            console.error('Error fetching comments', error);
+        }
+    }
+
+    useEffect(() => {
+        FetchComments();  // Fetch comments when the component mounts
+    }, [postId]);  // Re-fetch comments if the postId changes
+    
 
 
     function timeAgo(dateString) {
@@ -44,7 +60,7 @@ export default function CommentSection({ postId, comments }) {
         }
     }
 
-
+    
 
 
     return (
@@ -53,6 +69,7 @@ export default function CommentSection({ postId, comments }) {
                 <div className="w-full flex-col justify-start items-start lg:gap-7 gap-7 inline-flex">
                     <h2 className="text-gray-900 text-4xl font-bold font-manrope leading-normal">Comments</h2>
                     <form action="" onSubmit={submitComment} className="w-full relative flex justify-between items-center gap-2">
+                        <img className="w-12 h-12 rounded-full object-cover  shadow" src={import.meta.env.VITE_API_BASE_URL + user?.profile} alt="" />
                         <input ref={conteRef} type="text"
                             className="w-full py-3 px-5 rounded-lg border border-gray-300 bg-white shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed"
                             placeholder="Leave a comment..." />

@@ -38,21 +38,17 @@ class PostController extends Controller
     {
         $user = auth()->user(); // Get the authenticated user or null if not logged in
 
-        $posts = Post::with([
-            'user',
-            'comments.user',
-            'likes',
-            'comments' => function ($query) {
-                $query->orderBy('created_at', 'desc');
-            }
-        ])
-            ->orderBy('created_at', 'desc')
-            ->get()
-            ->map(function ($post) use ($user) {
-                $post->is_liked_by_user = $user ? $post->isLikedByUser($user->id) : false;
-                $post->likes_count = $post->likes->count();
-                return $post;
-            });
+        // Fetch posts along with related user and count of comments
+        $posts = Post::with('user') // Fetch post and user details
+            ->withCount('comments')  // Count comments for each post
+            ->orderBy('created_at', 'desc') // Order posts by creation date
+            ->get();
+
+        // Map the posts to add likes_count without `is_liked_by_user`
+        $posts = $posts->map(function ($post) {
+            $post->likes_count = $post->likes()->count(); // Get total likes count
+            return $post;
+        });
 
         return response()->json(['posts' => $posts]);
     }
